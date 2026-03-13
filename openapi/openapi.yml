@@ -1,0 +1,296 @@
+openapi: 3.1.0
+info:
+  title: Google Cloud Speech-to-Text API
+  description: >-
+    Provides speech recognition capabilities to convert audio to text, supporting
+    synchronous recognition, asynchronous batch processing, and real-time
+    streaming transcription across 125+ languages.
+  version: v1
+  contact:
+    name: Google Cloud
+    url: https://cloud.google.com/speech-to-text/docs
+servers:
+  - url: https://speech.googleapis.com/v1
+    description: Google Cloud Speech-to-Text production endpoint
+tags:
+  - name: Speech
+    description: Perform speech recognition on audio
+  - name: Operations
+    description: Manage long-running operations
+paths:
+  /speech:recognize:
+    post:
+      operationId: recognize
+      summary: Synchronous speech recognition
+      description: >-
+        Performs synchronous speech recognition on audio data, returning
+        transcription results for short audio (up to 1 minute).
+      tags:
+        - Speech
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecognizeRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecognizeResponse'
+  /speech:longrunningrecognize:
+    post:
+      operationId: longRunningRecognize
+      summary: Asynchronous speech recognition
+      description: >-
+        Performs asynchronous speech recognition on audio data. Results are
+        available via the returned long-running operation. Supports audio up to
+        480 minutes.
+      tags:
+        - Speech
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LongRunningRecognizeRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+  /operations/{operationId}:
+    get:
+      operationId: getOperation
+      summary: Get operation status
+      description: Gets the latest state of a long-running operation.
+      tags:
+        - Operations
+      parameters:
+        - name: operationId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+  /projects/{project}/locations/{location}/recognizers:
+    get:
+      operationId: listRecognizers
+      summary: List recognizers
+      description: Lists recognizers in the specified project and location.
+      tags:
+        - Speech
+      parameters:
+        - name: project
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: location
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecognizerList'
+    post:
+      operationId: createRecognizer
+      summary: Create a recognizer
+      description: Creates a custom recognizer for speech recognition.
+      tags:
+        - Speech
+      parameters:
+        - name: project
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: location
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Recognizer'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+components:
+  schemas:
+    RecognizeRequest:
+      type: object
+      properties:
+        config:
+          $ref: '#/components/schemas/RecognitionConfig'
+        audio:
+          $ref: '#/components/schemas/RecognitionAudio'
+      required:
+        - config
+        - audio
+    RecognitionConfig:
+      type: object
+      properties:
+        encoding:
+          type: string
+          enum:
+            - LINEAR16
+            - FLAC
+            - MULAW
+            - AMR
+            - AMR_WB
+            - OGG_OPUS
+            - SPEEX_WITH_HEADER_BYTE
+            - WEBM_OPUS
+            - MP3
+          description: Encoding of the audio data
+        sampleRateHertz:
+          type: integer
+          description: Sample rate in Hertz of the audio data
+        languageCode:
+          type: string
+          description: Language of the audio (BCP-47 format)
+        maxAlternatives:
+          type: integer
+          description: Maximum number of recognition hypotheses
+        enableWordTimeOffsets:
+          type: boolean
+          description: If true, include time offset for each word
+        enableAutomaticPunctuation:
+          type: boolean
+          description: If true, add punctuation to recognition result
+        model:
+          type: string
+          description: Speech recognition model to use
+      required:
+        - languageCode
+    RecognitionAudio:
+      type: object
+      properties:
+        content:
+          type: string
+          format: byte
+          description: Base64-encoded audio data
+        uri:
+          type: string
+          description: URI pointing to the audio file (GCS URI)
+    RecognizeResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/SpeechRecognitionResult'
+        totalBilledTime:
+          type: string
+          description: Total billed time for the request
+    SpeechRecognitionResult:
+      type: object
+      properties:
+        alternatives:
+          type: array
+          items:
+            type: object
+            properties:
+              transcript:
+                type: string
+                description: Transcription text
+              confidence:
+                type: number
+                description: Confidence score (0.0 to 1.0)
+              words:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    word:
+                      type: string
+                    startTime:
+                      type: string
+                    endTime:
+                      type: string
+        channelTag:
+          type: integer
+    LongRunningRecognizeRequest:
+      type: object
+      properties:
+        config:
+          $ref: '#/components/schemas/RecognitionConfig'
+        audio:
+          $ref: '#/components/schemas/RecognitionAudio'
+        outputConfig:
+          type: object
+          properties:
+            gcsUri:
+              type: string
+              description: GCS URI for output results
+      required:
+        - config
+        - audio
+    Recognizer:
+      type: object
+      properties:
+        name:
+          type: string
+        displayName:
+          type: string
+        model:
+          type: string
+        languageCodes:
+          type: array
+          items:
+            type: string
+    RecognizerList:
+      type: object
+      properties:
+        recognizers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recognizer'
+        nextPageToken:
+          type: string
+    Operation:
+      type: object
+      properties:
+        name:
+          type: string
+        done:
+          type: boolean
+        response:
+          type: object
+        metadata:
+          type: object
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+security:
+  - oauth2:
+      - https://www.googleapis.com/auth/cloud-platform

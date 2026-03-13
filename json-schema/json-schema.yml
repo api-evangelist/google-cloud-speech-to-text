@@ -1,0 +1,91 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: https://raw.githubusercontent.com/api-evangelist/google-cloud-speech-to-text/refs/heads/main/json-schema/json-schema.yml
+title: Google Cloud Speech-to-Text Recognition Request
+description: A speech recognition request for the Google Cloud Speech-to-Text API
+type: object
+properties:
+  config:
+    type: object
+    description: Configuration for the recognition request
+    properties:
+      encoding:
+        type: string
+        enum:
+          - LINEAR16
+          - FLAC
+          - MULAW
+          - AMR
+          - AMR_WB
+          - OGG_OPUS
+          - SPEEX_WITH_HEADER_BYTE
+          - WEBM_OPUS
+          - MP3
+        description: Encoding of the supplied audio data
+      sampleRateHertz:
+        type: integer
+        minimum: 8000
+        maximum: 48000
+        description: Sample rate in Hertz of the audio data
+      audioChannelCount:
+        type: integer
+        minimum: 1
+        description: Number of channels in the input audio
+      languageCode:
+        type: string
+        pattern: ^[a-z]{2}(-[A-Z]{2})?$
+        description: Language of the supplied audio in BCP-47 format
+      alternativeLanguageCodes:
+        type: array
+        items:
+          type: string
+        description: Additional languages that may be present in the audio
+      maxAlternatives:
+        type: integer
+        minimum: 1
+        maximum: 30
+        description: Maximum number of recognition hypotheses to return
+      enableWordTimeOffsets:
+        type: boolean
+        description: If true, word-level time offsets are included in the response
+      enableWordConfidence:
+        type: boolean
+        description: If true, word-level confidence is included in the response
+      enableAutomaticPunctuation:
+        type: boolean
+        description: If true, automatic punctuation is added to the transcription
+      enableSpokenPunctuation:
+        type: boolean
+        description: If true, spoken punctuation is detected
+      model:
+        type: string
+        enum:
+          - default
+          - command_and_search
+          - phone_call
+          - video
+          - latest_long
+          - latest_short
+          - medical_dictation
+          - medical_conversation
+        description: Speech recognition model to use
+      useEnhanced:
+        type: boolean
+        description: If true, use an enhanced model for recognition
+    required:
+      - languageCode
+  audio:
+    type: object
+    description: The audio data to be recognized
+    properties:
+      content:
+        type: string
+        contentEncoding: base64
+        description: Base64-encoded audio data
+      uri:
+        type: string
+        format: uri
+        description: URI that points to the audio file (GCS URI)
+    description: Audio data for recognition
+required:
+  - config
+  - audio

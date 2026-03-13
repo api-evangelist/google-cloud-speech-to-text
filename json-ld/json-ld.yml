@@ -1,0 +1,41 @@
+"@context":
+  "@vocab": https://schema.org/
+  gcp: https://cloud.google.com/speech-to-text/docs/reference/rest/v1/
+  xsd: http://www.w3.org/2001/XMLSchema#
+  dcterms: http://purl.org/dc/terms/
+  RecognizeRequest:
+    "@id": gcp:speech/recognize
+    "@type": "@id"
+  config:
+    "@id": gcp:RecognitionConfig
+    "@type": "@id"
+  audio:
+    "@id": gcp:RecognitionAudio
+    "@type": "@id"
+  encoding:
+    "@id": gcp:encoding
+    "@type": xsd:string
+  languageCode:
+    "@id": schema:inLanguage
+    "@type": xsd:string
+  sampleRateHertz:
+    "@id": gcp:sampleRateHertz
+    "@type": xsd:integer
+  transcript:
+    "@id": gcp:transcript
+    "@type": xsd:string
+  confidence:
+    "@id": gcp:confidence
+    "@type": xsd:float
+  results:
+    "@id": gcp:results
+    "@container": "@list"
+  alternatives:
+    "@id": gcp:alternatives
+    "@container": "@list"
+  dateCreated:
+    "@id": dcterms:created
+    "@type": xsd:dateTime
+  dateModified:
+    "@id": dcterms:modified
+    "@type": xsd:dateTime
