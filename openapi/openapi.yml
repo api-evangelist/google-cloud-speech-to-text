@@ -21,7 +21,7 @@ paths:
   /speech:recognize:
     post:
       operationId: recognize
-      summary: Synchronous speech recognition
+      summary: Google Cloud Speech-To-Text Synchronous speech recognition
       description: >-
         Performs synchronous speech recognition on audio data, returning
         transcription results for short audio (up to 1 minute).
@@ -43,7 +43,7 @@ paths:
   /speech:longrunningrecognize:
     post:
       operationId: longRunningRecognize
-      summary: Asynchronous speech recognition
+      summary: Google Cloud Speech-To-Text Asynchronous speech recognition
       description: >-
         Performs asynchronous speech recognition on audio data. Results are
         available via the returned long-running operation. Supports audio up to
@@ -66,7 +66,7 @@ paths:
   /operations/{operationId}:
     get:
       operationId: getOperation
-      summary: Get operation status
+      summary: Google Cloud Speech-To-Text Get operation status
       description: Gets the latest state of a long-running operation.
       tags:
         - Operations
@@ -86,7 +86,7 @@ paths:
   /projects/{project}/locations/{location}/recognizers:
     get:
       operationId: listRecognizers
-      summary: List recognizers
+      summary: Google Cloud Speech-To-Text List recognizers
       description: Lists recognizers in the specified project and location.
       tags:
         - Speech
@@ -110,7 +110,7 @@ paths:
                 $ref: '#/components/schemas/RecognizerList'
     post:
       operationId: createRecognizer
-      summary: Create a recognizer
+      summary: Google Cloud Speech-To-Text Create a recognizer
       description: Creates a custom recognizer for speech recognition.
       tags:
         - Speech
