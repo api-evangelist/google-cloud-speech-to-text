@@ -1,0 +1,254 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Google Cloud Speech-to-Text API
+  description: Provides speech recognition capabilities to convert audio to text, supporting synchronous recognition, asynchronous
+    batch processing, and real-time streaming transcription across 125+ languages.
+  tags:
+  - Google
+  - Cloud
+  - Speech
+  - To
+  - Text
+  - API
+  created: '2026-05-06'
+  modified: '2026-05-06'
+capability:
+  consumes:
+  - type: http
+    namespace: google-cloud-speech-to-text
+    baseUri: https://speech.googleapis.com/v1
+    description: Google Cloud Speech-to-Text API HTTP API.
+    authentication:
+      type: bearer
+      token: '{{GOOGLE_CLOUD_SPEECH_TO_TEXT_TOKEN}}'
+    resources:
+    - name: speech-recognize
+      path: /speech:recognize
+      operations:
+      - name: recognize
+        method: POST
+        description: Google Cloud Speech-To-Text Synchronous speech recognition
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: speech-longrunningrecognize
+      path: /speech:longrunningrecognize
+      operations:
+      - name: longrunningrecognize
+        method: POST
+        description: Google Cloud Speech-To-Text Asynchronous speech recognition
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: operations-operationid
+      path: /operations/{operationId}
+      operations:
+      - name: getoperation
+        method: GET
+        description: Google Cloud Speech-To-Text Get operation status
+        inputParameters:
+        - name: operationId
+          in: path
+          type: string
+          required: true
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: projects-project-locations-location-recognizers
+      path: /projects/{project}/locations/{location}/recognizers
+      operations:
+      - name: listrecognizers
+        method: GET
+        description: Google Cloud Speech-To-Text List recognizers
+        inputParameters:
+        - name: project
+          in: path
+          type: string
+          required: true
+        - name: location
+          in: path
+          type: string
+          required: true
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createrecognizer
+        method: POST
+        description: Google Cloud Speech-To-Text Create a recognizer
+        inputParameters:
+        - name: project
+          in: path
+          type: string
+          required: true
+        - name: location
+          in: path
+          type: string
+          required: true
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    port: 8080
+    namespace: google-cloud-speech-to-text-rest
+    description: REST adapter for Google Cloud Speech-to-Text API.
+    resources:
+    - path: /speech:recognize
+      name: recognize
+      operations:
+      - method: POST
+        name: recognize
+        description: Google Cloud Speech-To-Text Synchronous speech recognition
+        call: google-cloud-speech-to-text.recognize
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /speech:longrunningrecognize
+      name: longrunningrecognize
+      operations:
+      - method: POST
+        name: longrunningrecognize
+        description: Google Cloud Speech-To-Text Asynchronous speech recognition
+        call: google-cloud-speech-to-text.longrunningrecognize
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /operations/{operationId}
+      name: getoperation
+      operations:
+      - method: GET
+        name: getoperation
+        description: Google Cloud Speech-To-Text Get operation status
+        call: google-cloud-speech-to-text.getoperation
+        with:
+          operationId: rest.operationId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /projects/{project}/locations/{location}/recognizers
+      name: listrecognizers
+      operations:
+      - method: GET
+        name: listrecognizers
+        description: Google Cloud Speech-To-Text List recognizers
+        call: google-cloud-speech-to-text.listrecognizers
+        with:
+          project: rest.project
+          location: rest.location
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /projects/{project}/locations/{location}/recognizers
+      name: createrecognizer
+      operations:
+      - method: POST
+        name: createrecognizer
+        description: Google Cloud Speech-To-Text Create a recognizer
+        call: google-cloud-speech-to-text.createrecognizer
+        with:
+          project: rest.project
+          location: rest.location
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: google-cloud-speech-to-text-mcp
+    transport: http
+    description: MCP adapter for Google Cloud Speech-to-Text API for AI agent use.
+    tools:
+    - name: recognize
+      description: Google Cloud Speech-To-Text Synchronous speech recognition
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: google-cloud-speech-to-text.recognize
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: longrunningrecognize
+      description: Google Cloud Speech-To-Text Asynchronous speech recognition
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: google-cloud-speech-to-text.longrunningrecognize
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getoperation
+      description: Google Cloud Speech-To-Text Get operation status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: google-cloud-speech-to-text.getoperation
+      with:
+        operationId: tools.operationId
+      inputParameters:
+      - name: operationId
+        type: string
+        description: operationId
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listrecognizers
+      description: Google Cloud Speech-To-Text List recognizers
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: google-cloud-speech-to-text.listrecognizers
+      with:
+        project: tools.project
+        location: tools.location
+      inputParameters:
+      - name: project
+        type: string
+        description: project
+        required: true
+      - name: location
+        type: string
+        description: location
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createrecognizer
+      description: Google Cloud Speech-To-Text Create a recognizer
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: google-cloud-speech-to-text.createrecognizer
+      with:
+        project: tools.project
+        location: tools.location
+      inputParameters:
+      - name: project
+        type: string
+        description: project
+        required: true
+      - name: location
+        type: string
+        description: location
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+binds:
+- namespace: env
+  keys:
+    GOOGLE_CLOUD_SPEECH_TO_TEXT_TOKEN: GOOGLE_CLOUD_SPEECH_TO_TEXT_TOKEN
