@@ -1,0 +1,216 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Google Cloud Speech-to-Text API — Speech
+  description: 'Google Cloud Speech-to-Text API — Speech. 4 operations. Lead operation: Google Cloud Speech-To-Text List recognizers.
+    Self-contained Naftiko capability covering one Google Cloud Speech To Text business surface.'
+  tags:
+  - Google Cloud Speech To Text
+  - Speech
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GOOGLE_CLOUD_SPEECH_TO_TEXT_API_KEY: GOOGLE_CLOUD_SPEECH_TO_TEXT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: openapi-speech
+    baseUri: https://speech.googleapis.com/v1
+    description: Google Cloud Speech-to-Text API — Speech business capability. Self-contained, no shared references.
+    resources:
+    - name: projects-project-locations-location-recognizers
+      path: /projects/{project}/locations/{location}/recognizers
+      operations:
+      - name: listrecognizers
+        method: GET
+        description: Google Cloud Speech-To-Text List recognizers
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: project
+          in: path
+          type: string
+          required: true
+        - name: location
+          in: path
+          type: string
+          required: true
+      - name: createrecognizer
+        method: POST
+        description: Google Cloud Speech-To-Text Create a recognizer
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: project
+          in: path
+          type: string
+          required: true
+        - name: location
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: speech:longrunningrecognize
+      path: /speech:longrunningrecognize
+      operations:
+      - name: longrunningrecognize
+        method: POST
+        description: Google Cloud Speech-To-Text Asynchronous speech recognition
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: speech:recognize
+      path: /speech:recognize
+      operations:
+      - name: recognize
+        method: POST
+        description: Google Cloud Speech-To-Text Synchronous speech recognition
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.GOOGLE_CLOUD_SPEECH_TO_TEXT_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: openapi-speech-rest
+    port: 8080
+    description: REST adapter for Google Cloud Speech-to-Text API — Speech. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/projects/{project}/locations/{location}/recognizers
+      name: projects-project-locations-location-recognizers
+      description: REST surface for projects-project-locations-location-recognizers.
+      operations:
+      - method: GET
+        name: listrecognizers
+        description: Google Cloud Speech-To-Text List recognizers
+        call: openapi-speech.listrecognizers
+        with:
+          project: rest.project
+          location: rest.location
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createrecognizer
+        description: Google Cloud Speech-To-Text Create a recognizer
+        call: openapi-speech.createrecognizer
+        with:
+          project: rest.project
+          location: rest.location
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/speech-longrunningrecognize
+      name: speech-longrunningrecognize
+      description: REST surface for speech:longrunningrecognize.
+      operations:
+      - method: POST
+        name: longrunningrecognize
+        description: Google Cloud Speech-To-Text Asynchronous speech recognition
+        call: openapi-speech.longrunningrecognize
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/speech-recognize
+      name: speech-recognize
+      description: REST surface for speech:recognize.
+      operations:
+      - method: POST
+        name: recognize
+        description: Google Cloud Speech-To-Text Synchronous speech recognition
+        call: openapi-speech.recognize
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: openapi-speech-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Google Cloud Speech-to-Text API — Speech. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: google-cloud-speech-text-list
+      description: Google Cloud Speech-To-Text List recognizers
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: openapi-speech.listrecognizers
+      with:
+        project: tools.project
+        location: tools.location
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: google-cloud-speech-text-create
+      description: Google Cloud Speech-To-Text Create a recognizer
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: openapi-speech.createrecognizer
+      with:
+        project: tools.project
+        location: tools.location
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: google-cloud-speech-text-asynchronous
+      description: Google Cloud Speech-To-Text Asynchronous speech recognition
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: openapi-speech.longrunningrecognize
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: google-cloud-speech-text-synchronous
+      description: Google Cloud Speech-To-Text Synchronous speech recognition
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: openapi-speech.recognize
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
