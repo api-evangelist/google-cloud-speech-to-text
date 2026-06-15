@@ -1,0 +1,136 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Google Cloud Speech-to-Text API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/auth",
+      "accessTokenUrl": "https://oauth2.googleapis.com/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Speech",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Google Cloud Speech-To-Text Synchronous speech recognition",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://speech.googleapis.com/v1/speech:recognize",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Performs synchronous speech recognition on audio data, returning transcription results for short audio (up to 1 minute)."
+        },
+        {
+          "info": {
+            "name": "Google Cloud Speech-To-Text Asynchronous speech recognition",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://speech.googleapis.com/v1/speech:longrunningrecognize",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Performs asynchronous speech recognition on audio data. Results are available via the returned long-running operation. Supports audio up to 480 minutes."
+        },
+        {
+          "info": {
+            "name": "Google Cloud Speech-To-Text List recognizers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://speech.googleapis.com/v1/projects/:project/locations/:location/recognizers",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "location",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Lists recognizers in the specified project and location."
+        },
+        {
+          "info": {
+            "name": "Google Cloud Speech-To-Text Create a recognizer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://speech.googleapis.com/v1/projects/:project/locations/:location/recognizers",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "location",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a custom recognizer for speech recognition."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Operations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Google Cloud Speech-To-Text Get operation status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://speech.googleapis.com/v1/operations/:operationId",
+            "params": [
+              {
+                "name": "operationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Gets the latest state of a long-running operation."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
