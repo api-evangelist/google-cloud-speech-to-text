@@ -1,32 +1,28 @@
 openapi: 3.1.0
 info:
-  title: Google Cloud Speech-to-Text API
-  description: >-
-    Provides speech recognition capabilities to convert audio to text, supporting
-    synchronous recognition, asynchronous batch processing, and real-time
-    streaming transcription across 125+ languages.
+  title: Google Cloud -to-Text Operations Speech API
+  description: Provides speech recognition capabilities to convert audio to text, supporting synchronous recognition, asynchronous batch processing, and real-time streaming transcription across 125+ languages.
   version: v1
   contact:
     name: Google Cloud
     url: https://cloud.google.com/speech-to-text/docs
 servers:
-  - url: https://speech.googleapis.com/v1
-    description: Google Cloud Speech-to-Text production endpoint
+- url: https://speech.googleapis.com/v1
+  description: Google Cloud Speech-to-Text production endpoint
+security:
+- oauth2:
+  - https://www.googleapis.com/auth/cloud-platform
 tags:
-  - name: Operations
-    description: Manage long-running operations
-  - name: Speech
-    description: Perform speech recognition on audio
+- name: Speech
+  description: Perform speech recognition on audio
 paths:
   /speech:recognize:
     post:
       operationId: recognize
       summary: Google Cloud Speech-To-Text Synchronous speech recognition
-      description: >-
-        Performs synchronous speech recognition on audio data, returning
-        transcription results for short audio (up to 1 minute).
+      description: Performs synchronous speech recognition on audio data, returning transcription results for short audio (up to 1 minute).
       tags:
-        - Speech
+      - Speech
       requestBody:
         required: true
         content:
@@ -44,12 +40,9 @@ paths:
     post:
       operationId: longRunningRecognize
       summary: Google Cloud Speech-To-Text Asynchronous speech recognition
-      description: >-
-        Performs asynchronous speech recognition on audio data. Results are
-        available via the returned long-running operation. Supports audio up to
-        480 minutes.
+      description: Performs asynchronous speech recognition on audio data. Results are available via the returned long-running operation. Supports audio up to 480 minutes.
       tags:
-        - Speech
+      - Speech
       requestBody:
         required: true
         content:
@@ -63,44 +56,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Operation'
-  /operations/{operationId}:
-    get:
-      operationId: getOperation
-      summary: Google Cloud Speech-To-Text Get operation status
-      description: Gets the latest state of a long-running operation.
-      tags:
-        - Operations
-      parameters:
-        - name: operationId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Operation'
   /projects/{project}/locations/{location}/recognizers:
     get:
       operationId: listRecognizers
       summary: Google Cloud Speech-To-Text List recognizers
       description: Lists recognizers in the specified project and location.
       tags:
-        - Speech
+      - Speech
       parameters:
-        - name: project
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: location
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: location
+        in: path
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response
@@ -113,18 +86,18 @@ paths:
       summary: Google Cloud Speech-To-Text Create a recognizer
       description: Creates a custom recognizer for speech recognition.
       tags:
-        - Speech
+      - Speech
       parameters:
-        - name: project
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: location
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: location
+        in: path
+        required: true
+        schema:
+          type: string
       requestBody:
         required: true
         content:
@@ -140,52 +113,6 @@ paths:
                 $ref: '#/components/schemas/Operation'
 components:
   schemas:
-    RecognizeRequest:
-      type: object
-      properties:
-        config:
-          $ref: '#/components/schemas/RecognitionConfig'
-        audio:
-          $ref: '#/components/schemas/RecognitionAudio'
-      required:
-        - config
-        - audio
-    RecognitionConfig:
-      type: object
-      properties:
-        encoding:
-          type: string
-          enum:
-            - LINEAR16
-            - FLAC
-            - MULAW
-            - AMR
-            - AMR_WB
-            - OGG_OPUS
-            - SPEEX_WITH_HEADER_BYTE
-            - WEBM_OPUS
-            - MP3
-          description: Encoding of the audio data
-        sampleRateHertz:
-          type: integer
-          description: Sample rate in Hertz of the audio data
-        languageCode:
-          type: string
-          description: Language of the audio (BCP-47 format)
-        maxAlternatives:
-          type: integer
-          description: Maximum number of recognition hypotheses
-        enableWordTimeOffsets:
-          type: boolean
-          description: If true, include time offset for each word
-        enableAutomaticPunctuation:
-          type: boolean
-          description: If true, add punctuation to recognition result
-        model:
-          type: string
-          description: Speech recognition model to use
-      required:
-        - languageCode
     RecognitionAudio:
       type: object
       properties:
@@ -196,16 +123,36 @@ components:
         uri:
           type: string
           description: URI pointing to the audio file (GCS URI)
-    RecognizeResponse:
+    RecognizeRequest:
       type: object
       properties:
-        results:
+        config:
+          $ref: '#/components/schemas/RecognitionConfig'
+        audio:
+          $ref: '#/components/schemas/RecognitionAudio'
+      required:
+      - config
+      - audio
+    RecognizerList:
+      type: object
+      properties:
+        recognizers:
           type: array
           items:
-            $ref: '#/components/schemas/SpeechRecognitionResult'
-        totalBilledTime:
+            $ref: '#/components/schemas/Recognizer'
+        nextPageToken:
           type: string
-          description: Total billed time for the request
+    Operation:
+      type: object
+      properties:
+        name:
+          type: string
+        done:
+          type: boolean
+        response:
+          type: object
+        metadata:
+          type: object
     SpeechRecognitionResult:
       type: object
       properties:
@@ -233,6 +180,52 @@ components:
                       type: string
         channelTag:
           type: integer
+    RecognitionConfig:
+      type: object
+      properties:
+        encoding:
+          type: string
+          enum:
+          - LINEAR16
+          - FLAC
+          - MULAW
+          - AMR
+          - AMR_WB
+          - OGG_OPUS
+          - SPEEX_WITH_HEADER_BYTE
+          - WEBM_OPUS
+          - MP3
+          description: Encoding of the audio data
+        sampleRateHertz:
+          type: integer
+          description: Sample rate in Hertz of the audio data
+        languageCode:
+          type: string
+          description: Language of the audio (BCP-47 format)
+        maxAlternatives:
+          type: integer
+          description: Maximum number of recognition hypotheses
+        enableWordTimeOffsets:
+          type: boolean
+          description: If true, include time offset for each word
+        enableAutomaticPunctuation:
+          type: boolean
+          description: If true, add punctuation to recognition result
+        model:
+          type: string
+          description: Speech recognition model to use
+      required:
+      - languageCode
+    RecognizeResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/SpeechRecognitionResult'
+        totalBilledTime:
+          type: string
+          description: Total billed time for the request
     LongRunningRecognizeRequest:
       type: object
       properties:
@@ -247,8 +240,8 @@ components:
               type: string
               description: GCS URI for output results
       required:
-        - config
-        - audio
+      - config
+      - audio
     Recognizer:
       type: object
       properties:
@@ -262,26 +255,6 @@ components:
           type: array
           items:
             type: string
-    RecognizerList:
-      type: object
-      properties:
-        recognizers:
-          type: array
-          items:
-            $ref: '#/components/schemas/Recognizer'
-        nextPageToken:
-          type: string
-    Operation:
-      type: object
-      properties:
-        name:
-          type: string
-        done:
-          type: boolean
-        response:
-          type: object
-        metadata:
-          type: object
   securitySchemes:
     oauth2:
       type: oauth2
@@ -291,6 +264,3 @@ components:
           tokenUrl: https://oauth2.googleapis.com/token
           scopes:
             https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
-security:
-  - oauth2:
-      - https://www.googleapis.com/auth/cloud-platform

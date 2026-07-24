@@ -1,0 +1,60 @@
+openapi: 3.1.0
+info:
+  title: Google Cloud Speech-to-Text Operations API
+  description: Provides speech recognition capabilities to convert audio to text, supporting synchronous recognition, asynchronous batch processing, and real-time streaming transcription across 125+ languages.
+  version: v1
+  contact:
+    name: Google Cloud
+    url: https://cloud.google.com/speech-to-text/docs
+servers:
+- url: https://speech.googleapis.com/v1
+  description: Google Cloud Speech-to-Text production endpoint
+security:
+- oauth2:
+  - https://www.googleapis.com/auth/cloud-platform
+tags:
+- name: Operations
+  description: Manage long-running operations
+paths:
+  /operations/{operationId}:
+    get:
+      operationId: getOperation
+      summary: Google Cloud Speech-To-Text Get operation status
+      description: Gets the latest state of a long-running operation.
+      tags:
+      - Operations
+      parameters:
+      - name: operationId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+components:
+  schemas:
+    Operation:
+      type: object
+      properties:
+        name:
+          type: string
+        done:
+          type: boolean
+        response:
+          type: object
+        metadata:
+          type: object
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
