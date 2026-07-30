@@ -3,7 +3,20 @@ name: Google Cloud Speech-To-Text
 description: >-
   Google Cloud Speech-to-Text API converts audio to text using advanced deep learning models, supporting over 125
   languages and variants with real-time streaming and batch transcription capabilities.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/google-cloud-speech-to-text.png
 url: https://raw.githubusercontent.com/api-evangelist/google-cloud-speech-to-text/refs/heads/main/apis.yml
 created: '2026-03-13'
 modified: '2026-05-19'
@@ -16,32 +29,49 @@ tags:
   - Speech Recognition
   - Transcription
 apis:
-  - name: Google Cloud Speech-to-Text API
-    description: >-
-      The Google Cloud Speech-to-Text API provides speech recognition capabilities to convert audio to text, supporting
-      synchronous recognition, asynchronous batch processing, and real-time streaming transcription.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://cloud.google.com/speech-to-text/docs
-    baseURL: https://speech.googleapis.com/v1
-    tags:
-      - Audio Analysis
-      - Speech Recognition
-      - Streaming
-      - Transcription
-    properties:
-      - type: Documentation
-        url: https://cloud.google.com/speech-to-text/docs/reference/rest
-      - type: OpenAPI
-        url: openapi/openapi.yml
-      - type: Authentication
-        url: https://cloud.google.com/docs/authentication
-      - type: GettingStarted
-        url: https://cloud.google.com/speech-to-text/docs/quickstart
-      - type: JSONSchema
-        url: json-schema/json-schema.yml
-      - type: JSONLDContext
-        url: json-ld/json-ld.yml
+- aid: google-cloud-speech-to-text:google-cloud-speech-to-text-operations-api
+  name: Google Cloud Speech-To-Text Operations API
+  description: Manage long-running operations
+  humanURL: https://cloud.google.com/speech-to-text/docs
+  baseURL: https://speech.googleapis.com/v1
+  tags:
+  - Operations
+  properties:
+  - type: OpenAPI
+    url: openapi/google-cloud-speech-to-text-operations-api-openapi.yml
+  - type: Documentation
+    url: https://cloud.google.com/speech-to-text/docs/reference/rest
+  - type: Authentication
+    url: https://cloud.google.com/docs/authentication
+  - type: GettingStarted
+    url: https://cloud.google.com/speech-to-text/docs/quickstart
+  - type: JSONSchema
+    url: json-schema/json-schema.yml
+  - type: JSONLDContext
+    url: json-ld/json-ld.yml
+- aid: google-cloud-speech-to-text:google-cloud-speech-to-text-speech-api
+  name: Google Cloud Speech-To-Text Speech API
+  description: Perform speech recognition on audio
+  humanURL: https://cloud.google.com/speech-to-text/docs
+  baseURL: https://speech.googleapis.com/v1
+  tags:
+  - Speech
+  properties:
+  - type: OpenAPI
+    url: openapi/google-cloud-speech-to-text-speech-api-openapi.yml
+  - type: Documentation
+    url: https://cloud.google.com/speech-to-text/docs/reference/rest
+  - type: Authentication
+    url: https://cloud.google.com/docs/authentication
+  - type: GettingStarted
+    url: https://cloud.google.com/speech-to-text/docs/quickstart
+  - type: JSONSchema
+    url: json-schema/json-schema.yml
+  - type: JSONLDContext
+    url: json-ld/json-ld.yml
 common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/google-cloud-speech-to-text/overview
   - type: AgenticAccess
     url: agentic-access/google-cloud-speech-to-text-agentic-access.yml
   - type: VulnerabilityDisclosure
