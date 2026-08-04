@@ -1,0 +1,16 @@
+{
+  "provider": "google-cloud-speech-to-text",
+  "sources": [
+    "google-cloud-speech-to-text-operations-api-openapi.yml",
+    "google-cloud-speech-to-text-speech-api-openapi.yml"
+  ],
+  "outputs": [
+    "google-cloud-speech-to-text-operations-api-openapi.yml",
+    "google-cloud-speech-to-text-speech-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

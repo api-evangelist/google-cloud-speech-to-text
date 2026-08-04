@@ -1,0 +1,151 @@
+{
+  "info": {
+    "_postman_id": "11636cb9-7c94-4a56-98d5-a76084f82806",
+    "name": "Google Cloud Speech-to-Text Operations API",
+    "description": "Provides speech recognition capabilities to convert audio to text, supporting synchronous recognition, asynchronous batch processing, and real-time streaming transcription across 125+ languages.\n\nContact Support:\n Name: Google Cloud",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:48:32.000Z",
+    "updatedAt": "2026-07-28T01:48:32.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-11636cb9-7c94-4a56-98d5-a76084f82806"
+  },
+  "item": [
+    {
+      "name": "operations",
+      "item": [
+        {
+          "name": "{operationId}",
+          "item": [
+            {
+              "name": "Google Cloud Speech-To-Text Get operation status",
+              "id": "76b49d25-1fb6-47f7-9361-285c5bace740",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/operations/:operationId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "operations",
+                    ":operationId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "0166e711-eb6a-40fe-a0a5-6c9e545e49f9",
+                      "key": "operationId",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Gets the latest state of a long-running operation."
+              },
+              "response": [
+                {
+                  "id": "5ce2c46d-5767-4e12-853d-8088b6b9933e",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/operations/:operationId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "operations",
+                        ":operationId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "operationId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"name\": \"<string>\",\n  \"done\": \"<boolean>\",\n  \"response\": {},\n  \"metadata\": {}\n}",
+                  "createdAt": "2026-07-28T01:48:33.000Z",
+                  "updatedAt": "2026-07-28T01:48:33.000Z",
+                  "uid": "35240-5ce2c46d-5767-4e12-853d-8088b6b9933e"
+                }
+              ],
+              "createdAt": "2026-07-28T01:48:33.000Z",
+              "updatedAt": "2026-07-28T01:48:33.000Z",
+              "uid": "35240-76b49d25-1fb6-47f7-9361-285c5bace740"
+            }
+          ],
+          "id": "ad5ff02a-112a-4477-a5f7-c2720255ed5d",
+          "createdAt": "2026-07-28T01:48:33.000Z",
+          "updatedAt": "2026-07-28T01:48:33.000Z",
+          "uid": "35240-ad5ff02a-112a-4477-a5f7-c2720255ed5d"
+        }
+      ],
+      "id": "c9ecac97-aa71-4beb-886b-f75c780f9add",
+      "createdAt": "2026-07-28T01:48:33.000Z",
+      "updatedAt": "2026-07-28T01:48:33.000Z",
+      "uid": "35240-c9ecac97-aa71-4beb-886b-f75c780f9add"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "https://www.googleapis.com/auth/cloud-platform",
+        "type": "string"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://oauth2.googleapis.com/token",
+        "type": "string"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://accounts.google.com/o/oauth2/auth",
+        "type": "string"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://speech.googleapis.com/v1"
+    }
+  ]
+}
