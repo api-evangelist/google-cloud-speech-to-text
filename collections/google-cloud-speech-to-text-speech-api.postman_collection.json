@@ -1,0 +1,504 @@
+{
+  "item": [
+    {
+      "id": "48f23087-72eb-4a9c-b093-3209367416f7",
+      "name": "Speech",
+      "description": {
+        "content": "Perform speech recognition on audio",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bc0d5101-34d4-46d0-a0bd-3707dd9b0777",
+          "name": "Google Cloud Speech-To-Text Synchronous speech recognition",
+          "request": {
+            "name": "Google Cloud Speech-To-Text Synchronous speech recognition",
+            "description": {
+              "content": "Performs synchronous speech recognition on audio data, returning transcription results for short audio (up to 1 minute).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "speech:recognize"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"config\": {\n    \"languageCode\": \"<string>\",\n    \"encoding\": \"<string>\",\n    \"sampleRateHertz\": \"<integer>\",\n    \"maxAlternatives\": \"<integer>\",\n    \"enableWordTimeOffsets\": \"<boolean>\",\n    \"enableAutomaticPunctuation\": \"<boolean>\",\n    \"model\": \"<string>\"\n  },\n  \"audio\": {\n    \"content\": \"<byte>\",\n    \"uri\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "775b8e3c-b05c-4a92-92be-66cf0e8723a8",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "speech:recognize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"config\": {\n    \"languageCode\": \"string\",\n    \"encoding\": \"MP3\",\n    \"sampleRateHertz\": 8310,\n    \"maxAlternatives\": 1513,\n    \"enableWordTimeOffsets\": false,\n    \"enableAutomaticPunctuation\": false,\n    \"model\": \"string\"\n  },\n  \"audio\": {\n    \"content\": \"string\",\n    \"uri\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"alternatives\": [\n        {\n          \"transcript\": \"string\",\n          \"confidence\": 8415.93846006722,\n          \"words\": [\n            {\n              \"word\": \"string\",\n              \"startTime\": \"string\",\n              \"endTime\": \"string\"\n            },\n            {\n              \"word\": \"string\",\n              \"startTime\": \"string\",\n              \"endTime\": \"string\"\n            }\n          ]\n        },\n        {\n          \"transcript\": \"string\",\n          \"confidence\": 8269.270751782533,\n          \"words\": [\n            {\n              \"word\": \"string\",\n              \"startTime\": \"string\",\n              \"endTime\": \"string\"\n            },\n            {\n              \"word\": \"string\",\n              \"startTime\": \"string\",\n              \"endTime\": \"string\"\n            }\n          ]\n        }\n      ],\n      \"channelTag\": 3299\n    },\n    {\n      \"alternatives\": [\n        {\n          \"transcript\": \"string\",\n          \"confidence\": 5847.485856145125,\n          \"words\": [\n            {\n              \"word\": \"string\",\n              \"startTime\": \"string\",\n              \"endTime\": \"string\"\n            },\n            {\n              \"word\": \"string\",\n              \"startTime\": \"string\",\n              \"endTime\": \"string\"\n            }\n          ]\n        },\n        {\n          \"transcript\": \"string\",\n          \"confidence\": 2562.7314988301064,\n          \"words\": [\n            {\n              \"word\": \"string\",\n              \"startTime\": \"string\",\n              \"endTime\": \"string\"\n            },\n            {\n              \"word\": \"string\",\n              \"startTime\": \"string\",\n              \"endTime\": \"string\"\n            }\n          ]\n        }\n      ],\n      \"channelTag\": 7459\n    }\n  ],\n  \"totalBilledTime\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ecd55245-dba9-4f58-a8c9-e6c379fbf331",
+          "name": "Google Cloud Speech-To-Text Asynchronous speech recognition",
+          "request": {
+            "name": "Google Cloud Speech-To-Text Asynchronous speech recognition",
+            "description": {
+              "content": "Performs asynchronous speech recognition on audio data. Results are available via the returned long-running operation. Supports audio up to 480 minutes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "speech:longrunningrecognize"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"config\": {\n    \"languageCode\": \"<string>\",\n    \"encoding\": \"<string>\",\n    \"sampleRateHertz\": \"<integer>\",\n    \"maxAlternatives\": \"<integer>\",\n    \"enableWordTimeOffsets\": \"<boolean>\",\n    \"enableAutomaticPunctuation\": \"<boolean>\",\n    \"model\": \"<string>\"\n  },\n  \"audio\": {\n    \"content\": \"<byte>\",\n    \"uri\": \"<string>\"\n  },\n  \"outputConfig\": {\n    \"gcsUri\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "79406f99-5842-4d4c-b685-3c65f741014e",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "speech:longrunningrecognize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"config\": {\n    \"languageCode\": \"string\",\n    \"encoding\": \"FLAC\",\n    \"sampleRateHertz\": 2970,\n    \"maxAlternatives\": 4818,\n    \"enableWordTimeOffsets\": false,\n    \"enableAutomaticPunctuation\": true,\n    \"model\": \"string\"\n  },\n  \"audio\": {\n    \"content\": \"string\",\n    \"uri\": \"string\"\n  },\n  \"outputConfig\": {\n    \"gcsUri\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"done\": true,\n  \"response\": {},\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5df8fe12-66f9-450d-9402-8dd2132897fb",
+          "name": "Google Cloud Speech-To-Text List recognizers",
+          "request": {
+            "name": "Google Cloud Speech-To-Text List recognizers",
+            "description": {
+              "content": "Lists recognizers in the specified project and location.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects",
+                ":project",
+                "locations",
+                ":location",
+                "recognizers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "location",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6faffb62-7e3b-4aae-b237-5e350b819c21",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":project",
+                    "locations",
+                    ":location",
+                    "recognizers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "location",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"recognizers\": [\n    {\n      \"name\": \"string\",\n      \"displayName\": \"string\",\n      \"model\": \"string\",\n      \"languageCodes\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"string\",\n      \"displayName\": \"string\",\n      \"model\": \"string\",\n      \"languageCodes\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ],\n  \"nextPageToken\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b7bf27d6-bd4c-4a8b-b09b-a114969d4eed",
+          "name": "Google Cloud Speech-To-Text Create a recognizer",
+          "request": {
+            "name": "Google Cloud Speech-To-Text Create a recognizer",
+            "description": {
+              "content": "Creates a custom recognizer for speech recognition.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects",
+                ":project",
+                "locations",
+                ":location",
+                "recognizers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "location",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"model\": \"<string>\",\n  \"languageCodes\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "94b40ce1-7680-412d-beb9-41daba903263",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":project",
+                    "locations",
+                    ":location",
+                    "recognizers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "location",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"model\": \"<string>\",\n  \"languageCodes\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"done\": true,\n  \"response\": {},\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://speech.googleapis.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "https://www.googleapis.com/auth/cloud-platform"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://oauth2.googleapis.com/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://accounts.google.com/o/oauth2/auth"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6b7f0b43-353d-4057-aa4b-18fc3f265d44",
+    "name": "Google Cloud -to-Text Operations Speech API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Provides speech recognition capabilities to convert audio to text, supporting synchronous recognition, asynchronous batch processing, and real-time streaming transcription across 125+ languages.\n\nContact Support:\n Name: Google Cloud",
+      "type": "text/plain"
+    }
+  }
+}
