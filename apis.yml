@@ -25,6 +25,12 @@ type: Index
 tags:
   - Audio Processing
   - Google Cloud
+  - Machine-Learning
+  - Speech Recognition
+  - Transcription
+tags_raw:
+  - Audio Processing
+  - Google Cloud
   - Machine Learning
   - Speech Recognition
   - Transcription
@@ -34,7 +40,8 @@ apis:
   description: Manage long-running operations
   humanURL: https://cloud.google.com/speech-to-text/docs
   baseURL: https://speech.googleapis.com/v1
-  tags:
+  tags: []
+  tags_raw:
   - Operations
   properties:
   - type: OpenAPI
