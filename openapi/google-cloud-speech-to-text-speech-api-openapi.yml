@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Google Cloud -to-Text Operations Speech API
   description: Provides speech recognition capabilities to convert audio to text, supporting synchronous recognition, asynchronous batch processing, and real-time streaming transcription across 125+ languages.
@@ -113,73 +113,32 @@ paths:
                 $ref: '#/components/schemas/Operation'
 components:
   schemas:
-    RecognitionAudio:
-      type: object
-      properties:
-        content:
-          type: string
-          format: byte
-          description: Base64-encoded audio data
-        uri:
-          type: string
-          description: URI pointing to the audio file (GCS URI)
-    RecognizeRequest:
+    LongRunningRecognizeRequest:
       type: object
       properties:
         config:
           $ref: '#/components/schemas/RecognitionConfig'
         audio:
           $ref: '#/components/schemas/RecognitionAudio'
+        outputConfig:
+          type: object
+          properties:
+            gcsUri:
+              type: string
+              description: GCS URI for output results
       required:
       - config
       - audio
-    RecognizerList:
+    RecognizeResponse:
       type: object
       properties:
-        recognizers:
+        results:
           type: array
           items:
-            $ref: '#/components/schemas/Recognizer'
-        nextPageToken:
+            $ref: '#/components/schemas/SpeechRecognitionResult'
+        totalBilledTime:
           type: string
-    Operation:
-      type: object
-      properties:
-        name:
-          type: string
-        done:
-          type: boolean
-        response:
-          type: object
-        metadata:
-          type: object
-    SpeechRecognitionResult:
-      type: object
-      properties:
-        alternatives:
-          type: array
-          items:
-            type: object
-            properties:
-              transcript:
-                type: string
-                description: Transcription text
-              confidence:
-                type: number
-                description: Confidence score (0.0 to 1.0)
-              words:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    word:
-                      type: string
-                    startTime:
-                      type: string
-                    endTime:
-                      type: string
-        channelTag:
-          type: integer
+          description: Total billed time for the request
     RecognitionConfig:
       type: object
       properties:
@@ -216,32 +175,54 @@ components:
           description: Speech recognition model to use
       required:
       - languageCode
-    RecognizeResponse:
+    RecognitionAudio:
       type: object
       properties:
-        results:
+        content:
+          type: string
+          format: byte
+          description: Base64-encoded audio data
+        uri:
+          type: string
+          description: URI pointing to the audio file (GCS URI)
+    SpeechRecognitionResult:
+      type: object
+      properties:
+        alternatives:
           type: array
           items:
-            $ref: '#/components/schemas/SpeechRecognitionResult'
-        totalBilledTime:
-          type: string
-          description: Total billed time for the request
-    LongRunningRecognizeRequest:
+            type: object
+            properties:
+              transcript:
+                type: string
+                description: Transcription text
+              confidence:
+                type: number
+                description: Confidence score (0.0 to 1.0)
+              words:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    word:
+                      type: string
+                    startTime:
+                      type: string
+                    endTime:
+                      type: string
+        channelTag:
+          type: integer
+    Operation:
       type: object
       properties:
-        config:
-          $ref: '#/components/schemas/RecognitionConfig'
-        audio:
-          $ref: '#/components/schemas/RecognitionAudio'
-        outputConfig:
+        name:
+          type: string
+        done:
+          type: boolean
+        response:
           type: object
-          properties:
-            gcsUri:
-              type: string
-              description: GCS URI for output results
-      required:
-      - config
-      - audio
+        metadata:
+          type: object
     Recognizer:
       type: object
       properties:
@@ -255,6 +236,25 @@ components:
           type: array
           items:
             type: string
+    RecognizerList:
+      type: object
+      properties:
+        recognizers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recognizer'
+        nextPageToken:
+          type: string
+    RecognizeRequest:
+      type: object
+      properties:
+        config:
+          $ref: '#/components/schemas/RecognitionConfig'
+        audio:
+          $ref: '#/components/schemas/RecognitionAudio'
+      required:
+      - config
+      - audio
   securitySchemes:
     oauth2:
       type: oauth2
