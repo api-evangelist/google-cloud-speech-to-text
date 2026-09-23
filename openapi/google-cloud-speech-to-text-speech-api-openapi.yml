@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Google Cloud -to-Text Operations Speech API
+  title: Google Cloud -to-Text Speech API
   description: Provides speech recognition capabilities to convert audio to text, supporting synchronous recognition, asynchronous batch processing, and real-time streaming transcription across 125+ languages.
   version: v1
   contact:
@@ -139,6 +139,59 @@ components:
         totalBilledTime:
           type: string
           description: Total billed time for the request
+    Operation:
+      type: object
+      properties:
+        name:
+          type: string
+        done:
+          type: boolean
+        response:
+          type: object
+        metadata:
+          type: object
+    Recognizer:
+      type: object
+      properties:
+        name:
+          type: string
+        displayName:
+          type: string
+        model:
+          type: string
+        languageCodes:
+          type: array
+          items:
+            type: string
+    RecognizeRequest:
+      type: object
+      properties:
+        config:
+          $ref: '#/components/schemas/RecognitionConfig'
+        audio:
+          $ref: '#/components/schemas/RecognitionAudio'
+      required:
+      - config
+      - audio
+    RecognizerList:
+      type: object
+      properties:
+        recognizers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recognizer'
+        nextPageToken:
+          type: string
+    RecognitionAudio:
+      type: object
+      properties:
+        content:
+          type: string
+          format: byte
+          description: Base64-encoded audio data
+        uri:
+          type: string
+          description: URI pointing to the audio file (GCS URI)
     RecognitionConfig:
       type: object
       properties:
@@ -175,16 +228,6 @@ components:
           description: Speech recognition model to use
       required:
       - languageCode
-    RecognitionAudio:
-      type: object
-      properties:
-        content:
-          type: string
-          format: byte
-          description: Base64-encoded audio data
-        uri:
-          type: string
-          description: URI pointing to the audio file (GCS URI)
     SpeechRecognitionResult:
       type: object
       properties:
@@ -212,49 +255,6 @@ components:
                       type: string
         channelTag:
           type: integer
-    Operation:
-      type: object
-      properties:
-        name:
-          type: string
-        done:
-          type: boolean
-        response:
-          type: object
-        metadata:
-          type: object
-    Recognizer:
-      type: object
-      properties:
-        name:
-          type: string
-        displayName:
-          type: string
-        model:
-          type: string
-        languageCodes:
-          type: array
-          items:
-            type: string
-    RecognizerList:
-      type: object
-      properties:
-        recognizers:
-          type: array
-          items:
-            $ref: '#/components/schemas/Recognizer'
-        nextPageToken:
-          type: string
-    RecognizeRequest:
-      type: object
-      properties:
-        config:
-          $ref: '#/components/schemas/RecognitionConfig'
-        audio:
-          $ref: '#/components/schemas/RecognitionAudio'
-      required:
-      - config
-      - audio
   securitySchemes:
     oauth2:
       type: oauth2
