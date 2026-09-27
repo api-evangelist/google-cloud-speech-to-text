@@ -113,56 +113,6 @@ paths:
                 $ref: '#/components/schemas/Operation'
 components:
   schemas:
-    LongRunningRecognizeRequest:
-      type: object
-      properties:
-        config:
-          $ref: '#/components/schemas/RecognitionConfig'
-        audio:
-          $ref: '#/components/schemas/RecognitionAudio'
-        outputConfig:
-          type: object
-          properties:
-            gcsUri:
-              type: string
-              description: GCS URI for output results
-      required:
-      - config
-      - audio
-    RecognizeResponse:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/SpeechRecognitionResult'
-        totalBilledTime:
-          type: string
-          description: Total billed time for the request
-    Operation:
-      type: object
-      properties:
-        name:
-          type: string
-        done:
-          type: boolean
-        response:
-          type: object
-        metadata:
-          type: object
-    Recognizer:
-      type: object
-      properties:
-        name:
-          type: string
-        displayName:
-          type: string
-        model:
-          type: string
-        languageCodes:
-          type: array
-          items:
-            type: string
     RecognizeRequest:
       type: object
       properties:
@@ -173,15 +123,6 @@ components:
       required:
       - config
       - audio
-    RecognizerList:
-      type: object
-      properties:
-        recognizers:
-          type: array
-          items:
-            $ref: '#/components/schemas/Recognizer'
-        nextPageToken:
-          type: string
     RecognitionAudio:
       type: object
       properties:
@@ -255,6 +196,65 @@ components:
                       type: string
         channelTag:
           type: integer
+    Operation:
+      type: object
+      properties:
+        name:
+          type: string
+        done:
+          type: boolean
+        response:
+          type: object
+        metadata:
+          type: object
+    LongRunningRecognizeRequest:
+      type: object
+      properties:
+        config:
+          $ref: '#/components/schemas/RecognitionConfig'
+        audio:
+          $ref: '#/components/schemas/RecognitionAudio'
+        outputConfig:
+          type: object
+          properties:
+            gcsUri:
+              type: string
+              description: GCS URI for output results
+      required:
+      - config
+      - audio
+    RecognizeResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/SpeechRecognitionResult'
+        totalBilledTime:
+          type: string
+          description: Total billed time for the request
+    RecognizerList:
+      type: object
+      properties:
+        recognizers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recognizer'
+        nextPageToken:
+          type: string
+    Recognizer:
+      type: object
+      properties:
+        name:
+          type: string
+        displayName:
+          type: string
+        model:
+          type: string
+        languageCodes:
+          type: array
+          items:
+            type: string
   securitySchemes:
     oauth2:
       type: oauth2
