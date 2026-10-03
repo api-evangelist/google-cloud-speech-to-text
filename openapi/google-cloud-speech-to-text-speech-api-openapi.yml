@@ -113,26 +113,28 @@ paths:
                 $ref: '#/components/schemas/Operation'
 components:
   schemas:
-    RecognizeRequest:
+    Recognizer:
       type: object
       properties:
-        config:
-          $ref: '#/components/schemas/RecognitionConfig'
-        audio:
-          $ref: '#/components/schemas/RecognitionAudio'
-      required:
-      - config
-      - audio
-    RecognitionAudio:
+        name:
+          type: string
+        displayName:
+          type: string
+        model:
+          type: string
+        languageCodes:
+          type: array
+          items:
+            type: string
+    RecognizerList:
       type: object
       properties:
-        content:
+        recognizers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recognizer'
+        nextPageToken:
           type: string
-          format: byte
-          description: Base64-encoded audio data
-        uri:
-          type: string
-          description: URI pointing to the audio file (GCS URI)
     RecognitionConfig:
       type: object
       properties:
@@ -169,33 +171,16 @@ components:
           description: Speech recognition model to use
       required:
       - languageCode
-    SpeechRecognitionResult:
+    RecognizeResponse:
       type: object
       properties:
-        alternatives:
+        results:
           type: array
           items:
-            type: object
-            properties:
-              transcript:
-                type: string
-                description: Transcription text
-              confidence:
-                type: number
-                description: Confidence score (0.0 to 1.0)
-              words:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    word:
-                      type: string
-                    startTime:
-                      type: string
-                    endTime:
-                      type: string
-        channelTag:
-          type: integer
+            $ref: '#/components/schemas/SpeechRecognitionResult'
+        totalBilledTime:
+          type: string
+          description: Total billed time for the request
     Operation:
       type: object
       properties:
@@ -223,38 +208,53 @@ components:
       required:
       - config
       - audio
-    RecognizeResponse:
+    RecognizeRequest:
       type: object
       properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/SpeechRecognitionResult'
-        totalBilledTime:
-          type: string
-          description: Total billed time for the request
-    RecognizerList:
+        config:
+          $ref: '#/components/schemas/RecognitionConfig'
+        audio:
+          $ref: '#/components/schemas/RecognitionAudio'
+      required:
+      - config
+      - audio
+    SpeechRecognitionResult:
       type: object
       properties:
-        recognizers:
+        alternatives:
           type: array
           items:
-            $ref: '#/components/schemas/Recognizer'
-        nextPageToken:
-          type: string
-    Recognizer:
+            type: object
+            properties:
+              transcript:
+                type: string
+                description: Transcription text
+              confidence:
+                type: number
+                description: Confidence score (0.0 to 1.0)
+              words:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    word:
+                      type: string
+                    startTime:
+                      type: string
+                    endTime:
+                      type: string
+        channelTag:
+          type: integer
+    RecognitionAudio:
       type: object
       properties:
-        name:
+        content:
           type: string
-        displayName:
+          format: byte
+          description: Base64-encoded audio data
+        uri:
           type: string
-        model:
-          type: string
-        languageCodes:
-          type: array
-          items:
-            type: string
+          description: URI pointing to the audio file (GCS URI)
   securitySchemes:
     oauth2:
       type: oauth2
