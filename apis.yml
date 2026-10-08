@@ -90,6 +90,12 @@ apis:
   - type: JSONLDContext
     url: json-ld/json-ld.yml
 common:
+  - type: Plans
+    url: plans/google-cloud-speech-to-text-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/google-cloud-speech-to-text-rate-limits.yml
+  - type: FinOps
+    url: finops/google-cloud-speech-to-text-finops.yml
   - type: Website
     url: https://www.google.com/
   - type: PostmanWorkspace
