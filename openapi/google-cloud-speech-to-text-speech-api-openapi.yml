@@ -113,82 +113,6 @@ paths:
                 $ref: '#/components/schemas/Operation'
 components:
   schemas:
-    SpeechRecognitionResult:
-      type: object
-      properties:
-        alternatives:
-          type: array
-          items:
-            type: object
-            properties:
-              transcript:
-                type: string
-                description: Transcription text
-              confidence:
-                type: number
-                description: Confidence score (0.0 to 1.0)
-              words:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    word:
-                      type: string
-                    startTime:
-                      type: string
-                    endTime:
-                      type: string
-        channelTag:
-          type: integer
-    Recognizer:
-      type: object
-      properties:
-        name:
-          type: string
-        displayName:
-          type: string
-        model:
-          type: string
-        languageCodes:
-          type: array
-          items:
-            type: string
-    RecognizeRequest:
-      type: object
-      properties:
-        config:
-          $ref: '#/components/schemas/RecognitionConfig'
-        audio:
-          $ref: '#/components/schemas/RecognitionAudio'
-      required:
-      - config
-      - audio
-    RecognitionAudio:
-      type: object
-      properties:
-        content:
-          type: string
-          format: byte
-          description: Base64-encoded audio data
-        uri:
-          type: string
-          description: URI pointing to the audio file (GCS URI)
-    LongRunningRecognizeRequest:
-      type: object
-      properties:
-        config:
-          $ref: '#/components/schemas/RecognitionConfig'
-        audio:
-          $ref: '#/components/schemas/RecognitionAudio'
-        outputConfig:
-          type: object
-          properties:
-            gcsUri:
-              type: string
-              description: GCS URI for output results
-      required:
-      - config
-      - audio
     RecognitionConfig:
       type: object
       properties:
@@ -225,6 +149,91 @@ components:
           description: Speech recognition model to use
       required:
       - languageCode
+    SpeechRecognitionResult:
+      type: object
+      properties:
+        alternatives:
+          type: array
+          items:
+            type: object
+            properties:
+              transcript:
+                type: string
+                description: Transcription text
+              confidence:
+                type: number
+                description: Confidence score (0.0 to 1.0)
+              words:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    word:
+                      type: string
+                    startTime:
+                      type: string
+                    endTime:
+                      type: string
+        channelTag:
+          type: integer
+    LongRunningRecognizeRequest:
+      type: object
+      properties:
+        config:
+          $ref: '#/components/schemas/RecognitionConfig'
+        audio:
+          $ref: '#/components/schemas/RecognitionAudio'
+        outputConfig:
+          type: object
+          properties:
+            gcsUri:
+              type: string
+              description: GCS URI for output results
+      required:
+      - config
+      - audio
+    RecognizeRequest:
+      type: object
+      properties:
+        config:
+          $ref: '#/components/schemas/RecognitionConfig'
+        audio:
+          $ref: '#/components/schemas/RecognitionAudio'
+      required:
+      - config
+      - audio
+    RecognitionAudio:
+      type: object
+      properties:
+        content:
+          type: string
+          format: byte
+          description: Base64-encoded audio data
+        uri:
+          type: string
+          description: URI pointing to the audio file (GCS URI)
+    RecognizerList:
+      type: object
+      properties:
+        recognizers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recognizer'
+        nextPageToken:
+          type: string
+    Recognizer:
+      type: object
+      properties:
+        name:
+          type: string
+        displayName:
+          type: string
+        model:
+          type: string
+        languageCodes:
+          type: array
+          items:
+            type: string
     RecognizeResponse:
       type: object
       properties:
@@ -246,15 +255,6 @@ components:
           type: object
         metadata:
           type: object
-    RecognizerList:
-      type: object
-      properties:
-        recognizers:
-          type: array
-          items:
-            $ref: '#/components/schemas/Recognizer'
-        nextPageToken:
-          type: string
   securitySchemes:
     oauth2:
       type: oauth2
